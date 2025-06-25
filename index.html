@@ -8,7 +8,14 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Playfair Display', serif; margin: 0; padding: 0; color: #333; background: #fff; }
+    body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; color: #333; background: #fff; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; text-align: center; }
+    .container, .container p, .container div, .container form, .container ul, .container li { text-align: center; }
+    input, textarea, select, button, #pagination button {
+      text-align: left;
+      margin-left: auto;
+      margin-right: auto;
+    }
     .background-1, .background-2, .background-3 {
       background-size: cover; background-position: center top; background-repeat: no-repeat; padding: 24px 0;
     }
@@ -16,9 +23,8 @@
     .background-2 { background-image: url('background-2.jpg'); margin-top: 24px; }
     .background-3 { background-image: url('background-3.jpg'); margin-top: 24px; }
     .container { max-width: 700px; margin: auto; padding: 24px; background: rgba(255, 255, 255, 0.6); border-radius: 16px; }
-    h1, h2, h3 { text-align: center; margin-bottom: 8px; }
-    .dynamic-title { font-size: 32px; display: flex; flex-direction: column; align-items: center; }
-    .dynamic-title .amp { font-size: 52px; }
+    .dynamic-title { font-family: 'Playfair Display', serif; font-size: 36px; display: flex; flex-direction: column; align-items: center; }
+    .dynamic-title .amp { font-size: 24px; }
     .countdown { font-size: 20px; text-align: center; margin: 16px 0; font-weight: bold; }
     .button, button[type="submit"] { display: block; margin: 12px auto; padding: 14px 24px; background: #444; color: white; border-radius: 8px; border: none; cursor: pointer; }
     input, textarea, select { display: block; width: 90%; max-width: 500px; margin: 8px auto; padding: 10px; border-radius: 6px; border: 1px solid #ccc; }
@@ -39,22 +45,26 @@
   <!-- Background 1 -->
   <div class="background-1">
     <div class="container">
-      <h1 class="dynamic-title"><span>Fauzi</span><span class="amp">&</span><span>Liansky</span></h1>
+      <h1 class="dynamic-title">
+        <span style="font-size: 36px; font-weight: bold;">Fauzi</span>
+        <span class="amp" style="font-size: 24px;">&</span>
+        <span style="font-size: 36px; font-weight: bold;">Liansky</span>
+      </h1>
       <h3>Pernikahan - 27 Juli 2025</h3>
-      <div class="countdown" id="countdown">Menghitung waktu...</div>
+      <div class="countdown" id="countdown" style="font-weight:bold;">Menghitung waktu...</div>
     </div>
     <div class="spacer"></div>
     <div class="container">
-     <h2>Bride & Groom</h2>
+      <h2>Bride & Groom</h2>
       <div class="bride-groom-block">
-        <img src="ff.png" alt="Fauzi">
+        <img src="foto-fauzi.jpg" alt="Fauzi">
         <h3>Fauzi</h3>
-        <p>Putra pertama dari<br>Alm. Bapak Syafrudin &<br>Ibu [Nama Ibu Fauzi]</p>
+        <p>Putra dari Bapak [Nama Ayah Fauzi] & Ibu [Nama Ibu Fauzi]</p>
       </div>
       <div class="bride-groom-block">
-        <img src="cc.png" alt="Liansky">
-        <h3>Salsalbila Liansky Shania Putri</h3>
-        <p>Putri dari<br>Bapak [Nama Ayah Liansky] &<br>Ibu [Nama Ibu Liansky]</p>
+        <img src="foto-liansky.jpg" alt="Liansky">
+        <h3>Liansky</h3>
+        <p>Putri dari Bapak [Nama Ayah Liansky] & Ibu [Nama Ibu Liansky]</p>
       </div>
     </div>
   </div>
@@ -124,7 +134,6 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // Countdown
     const countdown = document.getElementById("countdown");
     const targetDate = new Date("July 27, 2025 07:00:00 GMT+0700").getTime();
     setInterval(() => {
@@ -138,10 +147,9 @@
       const weeks = Math.floor(totalHours / (24 * 7));
       const days = Math.floor((totalHours % (24 * 7)) / 24);
       const hours = totalHours % 24;
-      countdown.innerHTML = `Menuju Akad: ${weeks} minggu ${days} hari ${hours} jam lagi`;
+      countdown.innerHTML = `${weeks} minggu ${days} hari ${hours} jam lagi`;
     }, 1000);
 
-    // Music toggle
     const bgMusic = document.getElementById("bg-music");
     document.getElementById("music-toggle").addEventListener("click", () => {
       if (bgMusic.paused) {
@@ -151,7 +159,6 @@
       }
     });
 
-    // Save RSVP
     document.getElementById("rsvpForm").addEventListener("submit", (e) => {
       e.preventDefault();
       db.ref('rsvp').push({
@@ -163,7 +170,6 @@
       alert("Terima kasih atas konfirmasinya!");
     });
 
-    // Save Wish
     document.getElementById("wishForm").addEventListener("submit", (e) => {
       e.preventDefault();
       db.ref('wishes').push({
@@ -174,7 +180,6 @@
       loadWishes(currentPage);
     });
 
-    // Load Wishes with Pagination
     const wishList = document.getElementById("wishList");
     const pagination = document.getElementById("pagination");
     let wishes = [];
