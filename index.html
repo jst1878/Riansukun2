@@ -101,7 +101,11 @@
           <option value="Hadir">Hadir</option>
           <option value="Tidak Hadir">Tidak Hadir</option>
         </select>
-        <input type="number" id="rsvpJumlah" placeholder="Jumlah Orang" required>
+<select id="rsvpJumlah" required>
+  <option value="" disabled selected>Jumlah Orang Termasuk Anda</option>
+  <option value="1">1 Orang</option>
+  <option value="2">2 Orang</option>
+</select>
         <button type="submit">Kirim</button>
       </form>
 
